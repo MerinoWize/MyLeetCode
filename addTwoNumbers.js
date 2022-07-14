@@ -25,11 +25,19 @@ var addTwoNumbers = function(l1, l2) {
 
         currentResult.val = sumOnes;
 
-        if (currentNode1.next || currentNode2.next) {
+        if (currentNode1.next || currentNode2.next || currentCarry > 0) {
             currentResult.next = new ListNode();
             currentResult = currentResult.next;
-        }
 
+            if (!currentNode1?.next) {
+                currentNode1.next = new ListNode();
+            }
+
+            if (!currentNode2?.next) {
+                currentNode2.next = new ListNode();
+            }
+        }
+        
         currentNode1 = currentNode1.next;
         currentNode2 = currentNode2.next;
     }
