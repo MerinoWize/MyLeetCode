@@ -15,23 +15,34 @@ var addTwoNumbers = function(l1, l2) {
     let currentNode2 = l2;
     let currentCarry = 0;
 
-    let result;
+    let result = new ListNode();
     let currentResult = result;
 
-  while (currentNode1.next || currentNode2.next) {
-    console.log('currentResult', currentResult);
-    currentResult = currentResult?.next ? currentResult.next : currentResult;
-    const rawSum = (currentNode1?.val || 0) + (currentNode2?.val || 0) + currentCarry;
-    currentCarry = Math.trunc(rawSum / 10);
-    const sumOnes = rawSum - (currentCarry * 10);
+    while (currentNode1 || currentNode2) {
+        const rawSum = (currentNode1?.val || 0) + (currentNode2?.val || 0) + currentCarry;
+        currentCarry = Math.trunc(rawSum / 10);
+        const sumOnes = rawSum - (currentCarry * 10);
 
-    currentResult = listNode(sumOnes);
+        currentResult.val = sumOnes;
 
-    currentNode1 = currentNode1.next;
-    currentNode2 = currentNode2.next;
-  }
+        if (currentNode1.next || currentNode2.next || currentCarry > 0) {
+            currentResult.next = new ListNode();
+            currentResult = currentResult.next;
 
-  console.log('result', result);
+            if (!currentNode1?.next) {
+                currentNode1.next = new ListNode();
+            }
 
-  return result;
+            if (!currentNode2?.next) {
+                currentNode2.next = new ListNode();
+            }
+        }
+        
+        currentNode1 = currentNode1.next;
+        currentNode2 = currentNode2.next;
+    }
+
+    console.log('result', result);
+
+    return result;
 };
