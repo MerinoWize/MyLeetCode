@@ -18,20 +18,20 @@ var addTwoNumbers = function(l1, l2) {
     let result;
     let currentResult = result;
 
-  while (currentNode1.next || currentNode2.next) {
-    console.log('currentResult', currentResult);
-    currentResult = currentResult?.next ? currentResult.next : currentResult;
-    const rawSum = (currentNode1?.val || 0) + (currentNode2?.val || 0) + currentCarry;
-    currentCarry = Math.trunc(rawSum / 10);
-    const sumOnes = rawSum - (currentCarry * 10);
+    while (currentNode1.next || currentNode2.next) {
+        console.log('currentResult', currentResult);
+        currentResult = currentResult?.next ? currentResult.next : currentResult;
+        const rawSum = (currentNode1?.val || 0) + (currentNode2?.val || 0) + currentCarry;
+        currentCarry = Math.trunc(rawSum / 10);
+        const sumOnes = rawSum - (currentCarry * 10);
 
-    currentResult = listNode(sumOnes);
+        currentResult = listNode(sumOnes);
 
-    currentNode1 = currentNode1.next;
-    currentNode2 = currentNode2.next;
-  }
+        currentNode1 = currentNode1.next;
+        currentNode2 = currentNode2.next;
+    }
 
-  console.log('result', result);
+    console.log('result', result);
 
-  return result;
+    return result;
 };
