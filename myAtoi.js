@@ -54,5 +54,3 @@
 
     return currentResult * signMultipliyer;
 };
-
-// console.log(myAtoi('42'));
