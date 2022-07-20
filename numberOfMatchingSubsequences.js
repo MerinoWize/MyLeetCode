@@ -38,9 +38,5 @@
         isValidSub = true;
     }
 
-    console.log('matchingSubs', matchingSubs);
-
     return matchingSubs.length;
 };
-
-console.log(numMatchingSubseq("dsahjpjauf", ["ahjpjau","ja","ahbwzgqnuk","tnmlanowax"]));
