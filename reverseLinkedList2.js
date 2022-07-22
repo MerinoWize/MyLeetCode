@@ -12,72 +12,50 @@
  * @return {ListNode}
  */
  var reverseBetween = function(head, left, right) {
-    const getNfromStartNode = (head, n) => {
-        let node = head;
-        let prev = null;
-
-        for (let i = 1; i <= n; i++) {
-            if (!node) {
-                break
-            }
-
-            if (i > 1) {
-                prev = node;
-                node = node.next;
-            }
+    let startOfSublist,
+         endOfSublist,
+         beforeStartOfSublist,
+         afterEndOfSublist = null;
+    let count = 1;
+    let node = head;
+    let prev = null;
+    let next = null;
+    
+    while (node) {
+        if (count === left - 1) {
+            beforeStartOfSublist = node;
         }
 
-        return {
-            result: node, 
-            prev
-        };
-    };
+        if (count === left) {
+            startOfSublist = node
+        }
 
-    const getEndOflist = (head) => {
-        let node = head;
+        if (count === right) {
+            endOfSublist = node;
+        }
 
-        while (node.next) {
+        if (count === right + 1) {
+            afterEndOfSublist = node;
+        }
+
+        if (count >= left && count <= right) {
+            next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
+        } else {
             node = node.next;
         }
 
-        return node;
+        count ++;
     }
 
-    const reverseList = (head) => {
-        let prev = null;
-        let curr = head;
-        let next = null;
-
-        while (curr) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    };
-
-    const {  result: sublistEnd } = getNfromStartNode(head, right);
-    const sublisEndNext = sublistEnd.next;
-
-    sublistEnd.next = null;
-
-    const {  result: sublistStart, prev } = getNfromStartNode(head, left);
-
-    const reversedSublist = reverseList(sublistStart);
-
-    let newHead;
-
-    if (prev) {
-        prev.next = reversedSublist;
-        newHead = head;
+    if (beforeStartOfSublist) {
+        beforeStartOfSublist.next = endOfSublist;
     } else {
-        newHead = reversedSublist;
+        head = endOfSublist;
     }
+    startOfSublist.next = afterEndOfSublist;
 
-    const endOfNewList = getEndOflist(newHead);
-
-    endOfNewList.next = sublisEndNext;
-
-    return newHead;
+    return head;
 };
