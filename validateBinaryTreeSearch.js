@@ -11,49 +11,20 @@
  * @return {boolean}
  */
  var isValidBST = function(root) {
-    const treeQueue = [{ node: root, side: 'C'}];
-
-    const queue = (x) => treeQueue.push(x);
-    const dequeue = () => treeQueue.shift();
-
-    while (treeQueue.length > 0) {
-        const obj = dequeue();
-        const curr = obj.node;
-
-        const side = obj.side
-
-        if (side === 'R') {
-            if (curr.val <= root.val) {
-                return false;
-            }
+    const checkTreeValidity = (curr, low, high) => {
+        if (!curr) {
+            return true;
         }
 
-        if (side === 'L') {
-            if (curr.val >= root.val) {
-                return false;
-            }
+        if (
+            (typeof low === 'number' && curr.val <= low) ||
+            (typeof high === 'number' && curr.val >= high)
+        ) {
+            return false;
         }
 
-        if (curr.left) {
-            if (curr.left.val >= curr.val) {
-                return false;
-            }
-            queue({
-                node: curr.left,
-                side: side === 'C' ? 'L' : side,
-            });
-        }
-        
-        if (curr.right) {
-            if (curr.right.val <= curr.val) {
-                return false;
-            }
-            queue({
-                node: curr.right,
-                side: side === 'C' ? 'R' : side,
-            });
-        }
-    }
+        return checkTreeValidity(curr.left, low, curr.val) && checkTreeValidity(curr.right, curr.val, high);
+    };
 
-    return true;
+    return checkTreeValidity(root);
 };
