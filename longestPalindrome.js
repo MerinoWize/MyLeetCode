@@ -17,12 +17,12 @@
     if (s.length === 0) return "";
 
     let start = 0;
-    let end = 0; // 0.5
+    let end = 0;
 
     for (let i = 0; i < s.length; i++) {
-        const len1 = expandAroundCenter(s, i, i); // 1
-        const len2 = expandAroundCenter(s, i, i + 1); // 0
-        const len = Math.max(len1, len2); // 1
+        const len1 = expandAroundCenter(s, i, i);
+        const len2 = expandAroundCenter(s, i, i + 1);
+        const len = Math.max(len1, len2);
         if (len > (end - start)) {
             start = Math.round(i - (len - 1) / 2);
             end = Math.round(i + len / 2);
