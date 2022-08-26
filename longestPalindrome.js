@@ -24,8 +24,12 @@
         const len2 = expandAroundCenter(s, i, i + 1);
         const len = Math.max(len1, len2);
         if (len > (end - start)) {
-            start = Math.round(i - (len - 1) / 2);
-            end = Math.round(i + len / 2);
+            const offset = len % 2 === 0 ? 1 : 0;
+
+            const rounder = offset ? (x) => Math.ceil(x) : (x) => Math.floor(x);
+
+            start = rounder(i - (len - 1) / 2);
+            end = rounder(i + len / 2);
         }
     }
 
@@ -33,4 +37,4 @@
 
 };
 
-console.log(longestPalindrome('cbbd'));
+console.log(longestPalindrome("aapcabdkacaa"));
