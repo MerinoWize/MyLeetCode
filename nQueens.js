@@ -60,5 +60,3 @@
     backtrack(0);
     return result;
 };
-
-console.log(solveNQueens(8));
