@@ -34,4 +34,3 @@
     return result;
 };
 
-console.log(totalNQueens(16));
