@@ -8,57 +8,25 @@
         return 0;
     }
 
-    coins.sort((x, y) => x > y ? 1 : -1);
-    coins.reverse();
+    const getCoinsChange = (coins, remainder, count = {}) => {
+        if (remainder < 0) return -1;
+        if (remainder === 0) return 0;
+        if (count[remainder - 1] && count[remainder - 1] !== 0) return count[remainder - 1];
 
-    console.log('sortedCoins', coins);
+        let minimumValue = Number.MAX_VALUE;
 
-    let coinsToReturn = 0;
-    let remainder = amount;
-
-    while (remainder > 0) {
-        console.log('remainder', remainder);
-        let divisionValue;
-        let intPart;
-        let selectedCoin;
-        let aCoinWasSelected = false;
-
-        coins.find(c => {
-            selectedCoin = c;
-            divisionValue = remainder / c;
-            aCoinWasSelected = divisionValue >= 1;
-            return aCoinWasSelected;
+        coins.forEach(coin => {
+            let result = getCoinsChange(coins, remainder - coin, count);
+            if (result >= 0 && result < minimumValue) {
+                minimumValue = 1 + result;
+            }
         });
 
-        console.log('aCoinWasSelected', aCoinWasSelected);
+        count[remainder - 1] = (minimumValue === Number.MAX_VALUE) ? -1 : minimumValue;
+        return count[remainder - 1];
+    };
 
-        if (!aCoinWasSelected) {
-            remainder = -1;
-            break;
-        }
-
-        console.log('selectedCoin', selectedCoin);
-
-        intPart = Math.trunc(divisionValue);
-        console.log('intPart', intPart);
-        coinsToReturn += intPart;
-        remainder = remainder - (intPart * selectedCoin);
-
-        console.log('remainder - coins', remainder);
-
-        if (Number.isInteger(divisionValue)) {
-            remainder = 0;
-            break;
-        }
-
-        console.log('_______________________________');
-    }
-
-    if (coinsToReturn === 0 || remainder <= -1) {
-        return -1;
-    }
-
-    return coinsToReturn;
+    return getCoinsChange(coins, amount, {});
 };
 
-console.log('coinChange', coinChange([186,419,83,408], 6249));
+console.log('coinChange', coinChange([2], 3));
